@@ -4,7 +4,6 @@ import '../auth/auth_util.dart';
 import '../dashboard/dashboard_widget.dart';
 import '../flutter_flow/flutter_flow_radio_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
-import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
 import '../forget_pass/forget_pass_widget.dart';
 import 'package:flutter/material.dart';
@@ -378,7 +377,7 @@ class _SigninWidgetState extends State<SigninWidget> {
                                                                 context,
                                                                 MaterialPageRoute(
                                                                   builder: (context) =>
-                                                                      SigninWidget(),
+                                                                      DashboardWidget(),
                                                                 ),
                                                                 (r) => false,
                                                               );
