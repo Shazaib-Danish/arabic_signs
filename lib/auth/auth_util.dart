@@ -52,6 +52,7 @@ Future<bool> verifyEmailOTP(email, otp, BuildContext context, password, String f
   print(res);
   if (res) {
     print('OTP verified');
+    print(email + password);
     createAccountWithEmail(context, email, password,
         firstName: firstName, lastName: lastName, phone: phoneNumber);
     return res;
@@ -105,7 +106,6 @@ Future beginPhoneAuth({
     phoneNumber: phoneNumber,
     timeout: Duration(seconds: 0),
     verificationCompleted: (phoneAuthCredential) async {
-      await FirebaseAuth.instance.signInWithCredential(phoneAuthCredential);
       await Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(
@@ -138,9 +138,9 @@ Future verifySmsCode({
   } else {
     final authCredential =
     PhoneAuthProvider.credential(verificationId: _phoneAuthVerificationCode, smsCode: smsCode);
-    return signInOrCreateAccount(
-      context,
-          () => FirebaseAuth.instance.signInWithCredential(authCredential),
-    );
+    if(authCredential !=null){
+
+    }
+    return authCredential;
   }
 }

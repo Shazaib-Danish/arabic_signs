@@ -1,4 +1,5 @@
-import 'package:flutter/cupertino.dart';
+import 'package:arabic_lan/auth/auth_util.dart';
+import 'package:arabic_lan/signin/signin_widget.dart';
 
 import '../dashboard/dashboard_widget.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
@@ -32,9 +33,9 @@ class _ProfileWidgetState extends State<ProfileWidget> {
   @override
   void initState() {
     super.initState();
-    textController1 = TextEditingController();
-    textController2 = TextEditingController();
-    textController3 = TextEditingController();
+    textController1 = TextEditingController(text: '[User Name]');
+    textController2 = TextEditingController(text: '[User Email]');
+    textController3 = TextEditingController(text: '[User Phone]');
   }
 
   @override
@@ -42,9 +43,9 @@ class _ProfileWidgetState extends State<ProfileWidget> {
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: Color(0xFFF1F4F8),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 5),
+      body: Padding(
+        padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 5),
+        child: SingleChildScrollView(
           child: Column(
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.center,
@@ -108,12 +109,12 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                 padding: EdgeInsetsDirectional.fromSTEB(0, 1, 0, 100),
                 child: Container(
                   width: MediaQuery.of(context).size.width,
-                  height: 600,
+                  height: MediaQuery.of(context).size.height * 0.6,
                   decoration: BoxDecoration(
                     color: Colors.white,
                   ),
                   child: Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
+                    padding: EdgeInsetsDirectional.fromSTEB(8, 8, 8, 0),
                     child: ListView(
                       padding: EdgeInsets.zero,
                       scrollDirection: Axis.vertical,
@@ -126,11 +127,12 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                               Expanded(
                                 child: TextFormField(
                                   controller: textController1,
+                                  enabled: false,
                                   obscureText: false,
                                   decoration: InputDecoration(
                                     labelText: 'اسم المستخدم',
                                     labelStyle:
-                                        FlutterFlowTheme.bodyText1.override(
+                                    FlutterFlowTheme.bodyText1.override(
                                       fontFamily: 'Lexend Deca',
                                       color: Color(0xFF090F13),
                                       fontSize: 14,
@@ -138,20 +140,13 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                     ),
                                     hintText: 'What do people call you...?',
                                     hintStyle:
-                                        FlutterFlowTheme.bodyText1.override(
+                                    FlutterFlowTheme.bodyText1.override(
                                       fontFamily: 'Lexend Deca',
                                       color: Color(0xFF8B97A2),
                                       fontSize: 14,
                                       fontWeight: FontWeight.normal,
                                     ),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Color(0xFFDBE2E7),
-                                        width: 1,
-                                      ),
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
+                                    disabledBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
                                         color: Color(0xFFDBE2E7),
                                         width: 1,
@@ -179,11 +174,12 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                               Expanded(
                                 child: TextFormField(
                                   controller: textController2,
+                                  enabled: false,
                                   obscureText: false,
                                   decoration: InputDecoration(
                                     labelText: 'البريد الإلكتروني',
                                     labelStyle:
-                                        FlutterFlowTheme.bodyText1.override(
+                                    FlutterFlowTheme.bodyText1.override(
                                       fontFamily: 'Lexend Deca',
                                       color: Color(0xFF090F13),
                                       fontSize: 14,
@@ -191,20 +187,13 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                     ),
                                     hintText: 'Enter a new email',
                                     hintStyle:
-                                        FlutterFlowTheme.bodyText1.override(
+                                    FlutterFlowTheme.bodyText1.override(
                                       fontFamily: 'Lexend Deca',
                                       color: Color(0xFF8B97A2),
                                       fontSize: 14,
                                       fontWeight: FontWeight.normal,
                                     ),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Color(0xFFDBE2E7),
-                                        width: 1,
-                                      ),
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
+                                    disabledBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
                                         color: Color(0xFFDBE2E7),
                                         width: 1,
@@ -233,10 +222,11 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                 child: TextFormField(
                                   controller: textController3,
                                   obscureText: false,
+                                  enabled: false,
                                   decoration: InputDecoration(
                                     labelText: 'رقم الجوال ',
                                     labelStyle:
-                                        FlutterFlowTheme.bodyText1.override(
+                                    FlutterFlowTheme.bodyText1.override(
                                       fontFamily: 'Lexend Deca',
                                       color: Color(0xFF090F13),
                                       fontSize: 14,
@@ -244,20 +234,13 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                     ),
                                     hintText: 'ادخل رقم الجوال الجديد',
                                     hintStyle:
-                                        FlutterFlowTheme.bodyText1.override(
+                                    FlutterFlowTheme.bodyText1.override(
                                       fontFamily: 'Lexend Deca',
                                       color: Color(0xFF8B97A2),
                                       fontSize: 14,
                                       fontWeight: FontWeight.normal,
                                     ),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Color(0xFFDBE2E7),
-                                        width: 1,
-                                      ),
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
+                                    disabledBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
                                         color: Color(0xFFDBE2E7),
                                         width: 1,
@@ -278,7 +261,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
+                          padding: EdgeInsetsDirectional.fromSTEB(6, 0, 6, 0),
                           child: InkWell(
                             onTap: () async {
                               await Navigator.push(
@@ -289,7 +272,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                               );
                             },
                             child: Container(
-                              width: MediaQuery.of(context).size.width,
+                              width: MediaQuery.of(context).size.width * 0.7,
                               height: 50,
                               decoration: BoxDecoration(
                                 color: Color(0x14061E47),
@@ -299,34 +282,22 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                 ),
                               ),
                               child: Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
+                                padding: const EdgeInsets.only(left: 10.0),
                                 child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisSize: MainAxisSize.max,
                                   children: [
-                                    Align(
-                                      alignment: AlignmentDirectional(-0.5, 0),
-                                      child: Icon(
-                                        Icons.arrow_back,
-                                        color: Color(0xDF061E47),
-                                        size: 20,
-                                      ),
+                                    Icon(
+                                      Icons.arrow_back,
+                                      color: Color(0xDF061E47),
+                                      size: 20,
                                     ),
-                                    Align(
-                                      alignment: AlignmentDirectional(1, 1),
-                                      child: Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            8, 8, 2, 0),
-                                        child: Text(
-                                          'تغير كلمة المرور',
-                                          style: FlutterFlowTheme.bodyText1
-                                              .override(
-                                            fontFamily: 'Poppins',
-                                            color: Colors.black,
-
-                                          ),
-
-                                        ),
+                                    Spacer(),
+                                    Text(
+                                      'تغير كلمة المرور',
+                                      style: FlutterFlowTheme.bodyText1
+                                          .override(
+                                        fontFamily: 'Poppins',
+                                        color: Colors.black,
                                       ),
                                     )
                                   ],
@@ -351,7 +322,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                   height: 50,
                                   color: Color(0xDF061E47),
                                   textStyle:
-                                      FlutterFlowTheme.bodyText2.override(
+                                  FlutterFlowTheme.bodyText2.override(
                                     fontFamily: 'Lexend Deca',
                                     color: Colors.white,
                                     fontSize: 14,
@@ -373,7 +344,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                           alignment: AlignmentDirectional(0, -0.65),
                           child: Padding(
                             padding:
-                                EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
+                            EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
                             child: Row(
                               mainAxisSize: MainAxisSize.min,
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -383,7 +354,8 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                     alignment: AlignmentDirectional(0, -0.75),
                                     child: FFButtonWidget(
                                       onPressed: () {
-                                        print('Button_Secondary pressed ...');
+                                        signOut().whenComplete(() => Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
+                                            SigninWidget()), (Route<dynamic> route) => false),);
                                       },
                                       text: 'تسجيل الخروج',
                                       options: FFButtonOptions(
@@ -391,7 +363,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                         height: 50,
                                         color: Color(0xDF061E47),
                                         textStyle:
-                                            FlutterFlowTheme.bodyText2.override(
+                                        FlutterFlowTheme.bodyText2.override(
                                           fontFamily: 'Lexend Deca',
                                           color: Colors.white,
                                           fontSize: 14,
@@ -427,182 +399,145 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                     decoration: BoxDecoration(
                       color: Color(0x4A061E47),
                     ),
-                    child: Container(
-                      width: MediaQuery.of(context).size.width,
-                      height: 60,
-                      decoration: BoxDecoration(
-                        color: Color(0x4A061E47),
-                      ),
-                      alignment: AlignmentDirectional(0, 1),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Expanded(
-                            child: Align(
-                              alignment: AlignmentDirectional(-0.6, 0),
-                              child: FFButtonWidget(
-                                onPressed: () async {
-                                  setState(() => _loadingButton3 = true);
-                                  try {
-                                    await Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            DashboardWidget(),
-                                      ),
-                                    );
-                                  } finally {
-                                    setState(() => _loadingButton3 = false);
-                                  }
-                                },
-                                text: '',
-                                icon: Icon(
-                                  Icons.home,
-                                  size: 25,
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        FFButtonWidget(
+                          onPressed: () async {
+                            setState(() => _loadingButton3 = true);
+                            try {
+                              await Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => DashboardWidget(),
                                 ),
-                                options: FFButtonOptions(
-                                  width: 80,
-                                  height: 50,
-                                  color: Color(0x00FBBE28),
-                                  textStyle:
-                                  FlutterFlowTheme.subtitle2.override(
-                                    fontFamily: 'Poppins',
-                                    color: Colors.white,
-                                  ),
-                                  borderSide: BorderSide(
-                                    color: Colors.transparent,
-                                    width: 1,
-                                  ),
-                                  borderRadius: 12,
-                                ),
-                                loading: _loadingButton3,
-                              ),
-                            ),
+                              );
+                            } finally {
+                              setState(() => _loadingButton3 = false);
+                            }
+                          },
+                          text: '',
+                          icon: Icon(
+                            Icons.home,
+                            color: Colors.white,
+                            size: 25,
                           ),
-                          Expanded(
-                            child: Align(
-                              alignment: AlignmentDirectional(0, 0),
-                              child: FFButtonWidget(
-                                onPressed: () async {
-                                  setState(() => _loadingButton4 = true);
-                                  try {
-                                    await Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            RcordingWidget(),
-                                      ),
-                                    );
-                                  } finally {
-                                    setState(() => _loadingButton4 = false);
-                                  }
-                                },
-                                text: '',
-                                icon: Icon(
-                                  Icons.video_call,
-                                  size: 25,
-                                ),
-                                options: FFButtonOptions(
-                                  width: 80,
-                                  height: 50,
-                                  color: Color(0xFFFBBE28),
-                                  textStyle:
-                                  FlutterFlowTheme.subtitle2.override(
-                                    fontFamily: 'Poppins',
-                                    color: Colors.white,
-                                  ),
-                                  borderSide: BorderSide(
-                                    color: Colors.transparent,
-                                    width: 1,
-                                  ),
-                                  borderRadius: 12,
-                                ),
-                                loading: _loadingButton4,
-                              ),
+                          options: FFButtonOptions(
+                            width: 80,
+                            height: 50,
+                            color: Color(0x003474E0),
+                            textStyle: FlutterFlowTheme.subtitle2.override(
+                              fontFamily: 'Poppins',
+                              color: Colors.white,
                             ),
+                            borderSide: BorderSide(
+                              color: Colors.transparent,
+                              width: 1,
+                            ),
+                            borderRadius: 12,
                           ),
-                          FFButtonWidget(
-                            onPressed: () async {
-                              setState(() => _loadingButton5 = true);
-                              try {
-                                await Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => WalletWidget(),
-                                  ),
-                                );
-                              } finally {
-                                setState(() => _loadingButton5 = false);
-                              }
-                            },
-                            text: '',
-                            icon: Icon(
-                              Icons.account_balance_wallet,
-                              size: 25,
-                            ),
-                            options: FFButtonOptions(
-                              width: 80,
-                              height: 50,
-                              color: Color(0x003474E0),
-                              textStyle: FlutterFlowTheme.subtitle2.override(
-                                fontFamily: 'Poppins',
-                                color: Colors.white,
-                              ),
-                              borderSide: BorderSide(
-                                color: Colors.transparent,
-                                width: 1,
-                              ),
-                              borderRadius: 12,
-                            ),
-                            loading: _loadingButton5,
+                          loading: _loadingButton3,
+                        ),
+                        FFButtonWidget(
+                          onPressed: () async {
+                            setState(() => _loadingButton4 = true);
+                            try {
+                              await Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => RcordingWidget(),
+                                ),
+                              );
+                            } finally {
+                              setState(() => _loadingButton4 = false);
+                            }
+                          },
+                          text: '',
+                          icon: Icon(
+                            Icons.video_call,
+                            color: Colors.white,
+                            size: 25,
                           ),
-                          Expanded(
-                            child: Align(
-                              alignment: AlignmentDirectional(0.6, 0),
-                              child: FFButtonWidget(
-                                onPressed: () async {
-                                  setState(() => _loadingButton6 = true);
-                                  try {
-                                    await Navigator.push(
-                                      context,
-                                      PageTransition(
-                                        type: PageTransitionType.fade,
-                                        duration: Duration(milliseconds: 0),
-                                        reverseDuration:
-                                        Duration(milliseconds: 0),
-                                        child: ProfileWidget(),
-                                      ),
-                                    );
-                                  } finally {
-                                    setState(() => _loadingButton6 = false);
-                                  }
-                                },
-                                text: '',
-                                icon: Icon(
-                                  Icons.location_history,
-                                  size: 25,
-                                ),
-                                options: FFButtonOptions(
-                                  width: 80,
-                                  height: 50,
-                                  color: Color(0x003474E0),
-                                  textStyle:
-                                  FlutterFlowTheme.subtitle2.override(
-                                    fontFamily: 'Poppins',
-                                    color: Colors.white,
-                                  ),
-                                  borderSide: BorderSide(
-                                    color: Colors.transparent,
-                                    width: 1,
-                                  ),
-                                  borderRadius: 12,
-                                ),
-                                loading: _loadingButton6,
-                              ),
+                          options: FFButtonOptions(
+                            width: 80,
+                            height: 50,
+                            color: Color(0x003474E0),
+                            textStyle: FlutterFlowTheme.subtitle2.override(
+                              fontFamily: 'Poppins',
+                              color: Colors.white,
                             ),
-                          )
-                        ],
-                      ),
+                            borderSide: BorderSide(
+                              color: Colors.transparent,
+                              width: 1,
+                            ),
+                            borderRadius: 12,
+                          ),
+                          loading: _loadingButton4,
+                        ),
+                        FFButtonWidget(
+                          onPressed: () async {
+                            setState(() => _loadingButton5 = true);
+                            try {
+                              await Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => WalletWidget(),
+                                ),
+                              );
+                            } finally {
+                              setState(() => _loadingButton5 = false);
+                            }
+                          },
+                          text: '',
+                          icon: Icon(
+                            Icons.account_balance_wallet,
+                            color: Colors.white,
+                            size: 25,
+                          ),
+                          options: FFButtonOptions(
+                            width: 80,
+                            height: 50,
+                            color: Color(0x003474E0),
+                            textStyle: FlutterFlowTheme.subtitle2.override(
+                              fontFamily: 'Poppins',
+                              color: Colors.white,
+                            ),
+                            borderSide: BorderSide(
+                              color: Colors.transparent,
+                              width: 1,
+                            ),
+                            borderRadius: 12,
+                          ),
+                          loading: _loadingButton5,
+                        ),
+                        FFButtonWidget(
+                          onPressed: () {
+                            print('Button pressed ...');
+                          },
+                          text: '',
+                          icon: Icon(
+                            Icons.location_history,
+                            color: Colors.white,
+                            size: 25,
+                          ),
+                          options: FFButtonOptions(
+                            width: 80,
+                            height: 50,
+                            color: FlutterFlowTheme.secondaryColor,
+                            textStyle: FlutterFlowTheme.subtitle2.override(
+                              fontFamily: 'Poppins',
+                              color: Colors.white,
+                            ),
+                            borderSide: BorderSide(
+                              color: Colors.transparent,
+                              width: 1,
+                            ),
+                            borderRadius: 12,
+                          ),
+                          loading: _loadingButton6,
+                        )
+                      ],
                     ),
                   ),
                 ),
