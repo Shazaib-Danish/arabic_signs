@@ -43,24 +43,23 @@ class _CameraScreenState extends State<CameraScreen> {
       });
     });
   }
+
   Timer periodicTimer;
-  void startcoundown(){
+  void startcoundown() {
     periodicTimer = Timer.periodic(
-          const Duration(seconds: 1),
-          (timer) {
+      const Duration(seconds: 1),
+      (timer) {
         setState(() {
-         if(endTime>0){
-           endTime--;
-         }else{
-           periodicTimer.cancel();
-           recordingEnd();
-         }
+          if (endTime > 0) {
+            endTime--;
+          } else {
+            periodicTimer.cancel();
+            recordingEnd();
+          }
         });
       },
     );
   }
-
-
 
   runModelOnFrameStream() async {
     if (cameraImage != null) {
@@ -103,6 +102,7 @@ class _CameraScreenState extends State<CameraScreen> {
   @override
   void dispose() {
     super.dispose();
+
     _cameraController?.dispose();
   }
 
@@ -125,8 +125,20 @@ class _CameraScreenState extends State<CameraScreen> {
                   );
                 }
               }),
-          Positioned(right: 20, top: 20, child: Text(result,style: TextStyle(color: Colors.blueAccent),)),
-          Positioned(left: 20, top: 20, child: Text(endTime.toString(),style: TextStyle(color: Colors.blueAccent),)),
+          Positioned(
+              right: 20,
+              top: 20,
+              child: Text(
+                result,
+                style: TextStyle(color: Colors.blueAccent),
+              )),
+          Positioned(
+              left: 20,
+              top: 20,
+              child: Text(
+                endTime.toString(),
+                style: TextStyle(color: Colors.blueAccent),
+              )),
           Positioned(
             bottom: 0.0,
             child: Container(
@@ -147,16 +159,14 @@ class _CameraScreenState extends State<CameraScreen> {
                           ),
                           onPressed: () {
                             setState(() {
-                              if(!flash){
-                                _cameraController
-                                    .setFlashMode(FlashMode.torch);
-                                flash=true;
-                              }else{
+                              if (!flash) {
+                                _cameraController.setFlashMode(FlashMode.torch);
+                                flash = true;
+                              } else {
                                 _cameraController.setFlashMode(FlashMode.off);
-                                flash=false;
+                                flash = false;
                               }
                             });
-
                           }),
                       GestureDetector(
                         onTap: () async {
@@ -164,12 +174,10 @@ class _CameraScreenState extends State<CameraScreen> {
                             _cameraController.stopImageStream();
                             await _cameraController.startVideoRecording();
                             setState(() {
-
                               isRecoring = true;
-                              endTime=30;
+                              endTime = 30;
                               startcoundown();
                             });
-
                           } else {
                             recordingEnd();
                           }
@@ -198,11 +206,10 @@ class _CameraScreenState extends State<CameraScreen> {
                           onPressed: () async {
                             int cameraPos;
                             setState(() {
-
-                              if(iscamerafront){
+                              if (iscamerafront) {
                                 iscamerafront = false;
                                 cameraPos = 0;
-                              }else{
+                              } else {
                                 iscamerafront = true;
                                 cameraPos = 1;
                               }
@@ -234,18 +241,17 @@ class _CameraScreenState extends State<CameraScreen> {
       ),
     );
   }
-  void recordingEnd()async{
-    XFile videopath =
-        await _cameraController.stopVideoRecording();
+
+  void recordingEnd() async {
+    XFile videopath = await _cameraController.stopVideoRecording();
     setState(() {
       isRecoring = false;
-
     });
     Navigator.push(
         context,
         MaterialPageRoute(
             builder: (builder) => VideoViewPage(
-              file: File(videopath.path),
-            )));
+                  file: File(videopath.path),
+                )));
   }
 }

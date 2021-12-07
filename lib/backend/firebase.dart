@@ -5,9 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
-Future getWords() async {
-  print(
-      '99999999999999999999999999999999999999999999999999999999999999999999999999999999999999999');
+Future<List<String>> getWords() async {
   List<String> wordsList = [];
   await FirebaseFirestore.instance
       .collection("Words")
@@ -16,11 +14,10 @@ Future getWords() async {
       .then((value) {
     // first add the data to the Offset object
     List.from(value.data()['words']).forEach((element) {
-      print(
-          "DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD" +
-              element);
+      wordsList.add(element);
     });
   });
+  return wordsList;
 }
 
 Future<String> uploadToStorage(File file) async {
