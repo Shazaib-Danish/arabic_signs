@@ -22,6 +22,9 @@ Future<List<String>> getWords() async {
 
 Future<String> uploadToStorage(File file) async {
   try {
+    int sizeInBytes = file.lengthSync();
+    double sizeInMb = sizeInBytes / (1024 * 1024);
+    print(sizeInMb);
     final DateTime now = DateTime.now();
     final int millSeconds = now.millisecondsSinceEpoch;
     final String month = now.month.toString();

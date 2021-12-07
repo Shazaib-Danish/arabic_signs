@@ -251,7 +251,7 @@ class _RcordingWidgetState extends State<RcordingWidget>
                                         Column(
                                           children: wordsWidget.length > 0
                                               ? wordsWidget
-                                              : CircularProgressIndicator(),
+                                              : indicator,
                                         ),
                                         Container(
                                           width:
@@ -589,7 +589,9 @@ class _RcordingWidgetState extends State<RcordingWidget>
   }
 
   List<Widget> wordsWidget = [];
-
+  List<Widget> indicator = [
+    CircularProgressIndicator(),
+  ];
   void loop() async {
     List<String> words = await getWords();
     for (int i = 0; i < words.length; i++) {
