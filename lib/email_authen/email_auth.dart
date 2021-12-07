@@ -31,6 +31,7 @@ class _PhoneAuthenWidgetState extends State<EmailAuthenWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       key: scaffoldKey,
       appBar: AppBar(
         backgroundColor: Color(0xCA061E47),
@@ -154,6 +155,7 @@ class _PhoneAuthenWidgetState extends State<EmailAuthenWidget> {
                       );
                       return;
                     }
+                    print("email auth ${widget.password}");
                     verifyEmailOTP(widget.email, emailController.text, context, widget.password, widget.firstName, widget.lastName, widget.phoneNumber);
                     // await Navigator.pushAndRemoveUntil(
                     //   context,

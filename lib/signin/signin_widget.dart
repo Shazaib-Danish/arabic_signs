@@ -138,7 +138,7 @@ class _SigninWidgetState extends State<SigninWidget> {
                                             children: [
                                               Padding(
                                                 padding:
-                                                EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
+                                                    EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
                                                 child: TextFormField(
                                                   onChanged: (_) => setState(() {}),
                                                   controller: signEmailController,
@@ -169,15 +169,15 @@ class _SigninWidgetState extends State<SigninWidget> {
                                                         20, 24, 20, 0),
                                                     suffixIcon: signEmailController.text.isNotEmpty
                                                         ? InkWell(
-                                                      onTap: () => setState(
-                                                            () => signEmailController.clear(),
-                                                      ),
-                                                      child: Icon(
-                                                        Icons.clear,
-                                                        color: Color(0xFF757575),
-                                                        size: 20,
-                                                      ),
-                                                    )
+                                                            onTap: () => setState(
+                                                              () => signEmailController.clear(),
+                                                            ),
+                                                            child: Icon(
+                                                              Icons.clear,
+                                                              color: Color(0xFF757575),
+                                                              size: 20,
+                                                            ),
+                                                          )
                                                         : null,
                                                   ),
                                                   style: FlutterFlowTheme.bodyText1.override(
@@ -190,7 +190,7 @@ class _SigninWidgetState extends State<SigninWidget> {
                                               ),
                                               Padding(
                                                 padding:
-                                                EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
+                                                    EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
                                                 child: TextFormField(
                                                   controller: signPassController,
                                                   obscureText: !signPassVisibility,
@@ -220,8 +220,8 @@ class _SigninWidgetState extends State<SigninWidget> {
                                                         20, 24, 20, 0),
                                                     suffixIcon: InkWell(
                                                       onTap: () => setState(
-                                                            () => signPassVisibility =
-                                                        !signPassVisibility,
+                                                        () => signPassVisibility =
+                                                            !signPassVisibility,
                                                       ),
                                                       child: Icon(
                                                         signPassVisibility
@@ -242,7 +242,7 @@ class _SigninWidgetState extends State<SigninWidget> {
                                               ),
                                               Padding(
                                                 padding:
-                                                EdgeInsetsDirectional.fromSTEB(0, 24, 0, 0),
+                                                    EdgeInsetsDirectional.fromSTEB(0, 24, 0, 0),
                                                 child: FFButtonWidget(
                                                   onPressed: () async {
                                                     setState(() => _loadingButton1 = true);
@@ -289,7 +289,7 @@ class _SigninWidgetState extends State<SigninWidget> {
                                               ),
                                               Padding(
                                                 padding:
-                                                EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
+                                                    EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
                                                 child: FFButtonWidget(
                                                   onPressed: () async {
                                                     setState(() => _loadingButton2 = true);
@@ -327,7 +327,7 @@ class _SigninWidgetState extends State<SigninWidget> {
                                               ),
                                               Padding(
                                                 padding:
-                                                EdgeInsetsDirectional.fromSTEB(20, 0, 20, 0),
+                                                    EdgeInsetsDirectional.fromSTEB(20, 0, 20, 0),
                                                 child: Row(
                                                   mainAxisSize: MainAxisSize.max,
                                                   mainAxisAlignment: MainAxisAlignment.center,
@@ -341,7 +341,7 @@ class _SigninWidgetState extends State<SigninWidget> {
                                                           child: Text(
                                                             'او سجل الدخول',
                                                             style:
-                                                            FlutterFlowTheme.bodyText1.override(
+                                                                FlutterFlowTheme.bodyText1.override(
                                                               fontFamily: 'Lexend Deca',
                                                               color: Color(0x98FFFFFF),
                                                               fontSize: 14,
@@ -370,7 +370,7 @@ class _SigninWidgetState extends State<SigninWidget> {
                                                             setState(() => _loadingButton3 = true);
                                                             try {
                                                               final user =
-                                                              await signInWithGoogle(context);
+                                                                  await signInWithGoogle(context);
                                                               if (user == null) {
                                                                 return;
                                                               }
@@ -380,11 +380,11 @@ class _SigninWidgetState extends State<SigninWidget> {
                                                                   builder: (context) =>
                                                                       SigninWidget(),
                                                                 ),
-                                                                    (r) => false,
+                                                                (r) => false,
                                                               );
                                                             } finally {
                                                               setState(
-                                                                      () => _loadingButton3 = false);
+                                                                  () => _loadingButton3 = false);
                                                             }
                                                           },
                                                           text: 'باستخدام حسابك على Google',
@@ -443,7 +443,7 @@ class _SigninWidgetState extends State<SigninWidget> {
                                             children: [
                                               Padding(
                                                 padding:
-                                                EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
+                                                    EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
                                                 child: TextFormField(
                                                   onChanged: (_) => setState(() {}),
                                                   controller: firstNameController,
@@ -474,15 +474,15 @@ class _SigninWidgetState extends State<SigninWidget> {
                                                         20, 24, 20, 0),
                                                     suffixIcon: firstNameController.text.isNotEmpty
                                                         ? InkWell(
-                                                      onTap: () => setState(
-                                                            () => firstNameController.clear(),
-                                                      ),
-                                                      child: Icon(
-                                                        Icons.clear,
-                                                        color: Color(0xFF757575),
-                                                        size: 20,
-                                                      ),
-                                                    )
+                                                            onTap: () => setState(
+                                                              () => firstNameController.clear(),
+                                                            ),
+                                                            child: Icon(
+                                                              Icons.clear,
+                                                              color: Color(0xFF757575),
+                                                              size: 20,
+                                                            ),
+                                                          )
                                                         : null,
                                                   ),
                                                   style: FlutterFlowTheme.bodyText1.override(
@@ -502,7 +502,7 @@ class _SigninWidgetState extends State<SigninWidget> {
                                               ),
                                               Padding(
                                                 padding:
-                                                EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
+                                                    EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
                                                 child: TextFormField(
                                                   onChanged: (_) => setState(() {}),
                                                   controller: textController2,
@@ -533,15 +533,15 @@ class _SigninWidgetState extends State<SigninWidget> {
                                                         20, 24, 20, 0),
                                                     suffixIcon: textController2.text.isNotEmpty
                                                         ? InkWell(
-                                                      onTap: () => setState(
-                                                            () => textController2.clear(),
-                                                      ),
-                                                      child: Icon(
-                                                        Icons.clear,
-                                                        color: Color(0xFF757575),
-                                                        size: 20,
-                                                      ),
-                                                    )
+                                                            onTap: () => setState(
+                                                              () => textController2.clear(),
+                                                            ),
+                                                            child: Icon(
+                                                              Icons.clear,
+                                                              color: Color(0xFF757575),
+                                                              size: 20,
+                                                            ),
+                                                          )
                                                         : null,
                                                   ),
                                                   style: FlutterFlowTheme.bodyText1.override(
@@ -554,7 +554,7 @@ class _SigninWidgetState extends State<SigninWidget> {
                                               ),
                                               Padding(
                                                 padding:
-                                                EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
+                                                    EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
                                                 child: TextFormField(
                                                   onChanged: (_) => setState(() {}),
                                                   controller: signUpEmailController,
@@ -584,17 +584,17 @@ class _SigninWidgetState extends State<SigninWidget> {
                                                     contentPadding: EdgeInsetsDirectional.fromSTEB(
                                                         20, 24, 20, 0),
                                                     suffixIcon: signUpEmailController
-                                                        .text.isNotEmpty
+                                                            .text.isNotEmpty
                                                         ? InkWell(
-                                                      onTap: () => setState(
-                                                            () => signUpEmailController.clear(),
-                                                      ),
-                                                      child: Icon(
-                                                        Icons.clear,
-                                                        color: Color(0xFF757575),
-                                                        size: 22,
-                                                      ),
-                                                    )
+                                                            onTap: () => setState(
+                                                              () => signUpEmailController.clear(),
+                                                            ),
+                                                            child: Icon(
+                                                              Icons.clear,
+                                                              color: Color(0xFF757575),
+                                                              size: 22,
+                                                            ),
+                                                          )
                                                         : null,
                                                   ),
                                                   style: FlutterFlowTheme.bodyText1.override(
@@ -609,7 +609,7 @@ class _SigninWidgetState extends State<SigninWidget> {
                                                 alignment: AlignmentDirectional(0, -0.2),
                                                 child: Padding(
                                                   padding:
-                                                  EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
+                                                      EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
                                                   child: TextFormField(
                                                     onChanged: (_) => setState(() {}),
                                                     controller: phoneNumberController,
@@ -617,7 +617,7 @@ class _SigninWidgetState extends State<SigninWidget> {
                                                     decoration: InputDecoration(
                                                       labelText: 'رقم الجوال',
                                                       labelStyle:
-                                                      FlutterFlowTheme.bodyText1.override(
+                                                          FlutterFlowTheme.bodyText1.override(
                                                         fontFamily: 'Poppins',
                                                         color: Color(0xFFA5ABAE),
                                                       ),
@@ -638,20 +638,20 @@ class _SigninWidgetState extends State<SigninWidget> {
                                                       filled: true,
                                                       fillColor: Colors.white,
                                                       contentPadding:
-                                                      EdgeInsetsDirectional.fromSTEB(
-                                                          20, 24, 20, 0),
+                                                          EdgeInsetsDirectional.fromSTEB(
+                                                              20, 24, 20, 0),
                                                       suffixIcon: phoneNumberController
-                                                          .text.isNotEmpty
+                                                              .text.isNotEmpty
                                                           ? InkWell(
-                                                        onTap: () => setState(
-                                                              () => phoneNumberController.clear(),
-                                                        ),
-                                                        child: Icon(
-                                                          Icons.clear,
-                                                          color: Color(0xFF757575),
-                                                          size: 20,
-                                                        ),
-                                                      )
+                                                              onTap: () => setState(
+                                                                () => phoneNumberController.clear(),
+                                                              ),
+                                                              child: Icon(
+                                                                Icons.clear,
+                                                                color: Color(0xFF757575),
+                                                                size: 20,
+                                                              ),
+                                                            )
                                                           : null,
                                                     ),
                                                     style: FlutterFlowTheme.bodyText1.override(
@@ -674,7 +674,7 @@ class _SigninWidgetState extends State<SigninWidget> {
                                               ),
                                               Padding(
                                                 padding:
-                                                EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
+                                                    EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
                                                 child: TextFormField(
                                                   controller: signUpPassController,
                                                   obscureText: !signUpPassVisibility,
@@ -704,8 +704,8 @@ class _SigninWidgetState extends State<SigninWidget> {
                                                         20, 24, 20, 0),
                                                     suffixIcon: InkWell(
                                                       onTap: () => setState(
-                                                            () => signUpPassVisibility =
-                                                        !signUpPassVisibility,
+                                                        () => signUpPassVisibility =
+                                                            !signUpPassVisibility,
                                                       ),
                                                       child: Icon(
                                                         signUpPassVisibility
@@ -735,7 +735,7 @@ class _SigninWidgetState extends State<SigninWidget> {
                                               ),
                                               Padding(
                                                 padding:
-                                                EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
+                                                    EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
                                                 child: TextFormField(
                                                   controller: signUpPass2Controller,
                                                   obscureText: !signUpPass2Visibility,
@@ -765,8 +765,8 @@ class _SigninWidgetState extends State<SigninWidget> {
                                                         20, 24, 20, 0),
                                                     suffixIcon: InkWell(
                                                       onTap: () => setState(
-                                                            () => signUpPass2Visibility =
-                                                        !signUpPass2Visibility,
+                                                        () => signUpPass2Visibility =
+                                                            !signUpPass2Visibility,
                                                       ),
                                                       child: Icon(
                                                         signUpPass2Visibility
@@ -796,7 +796,7 @@ class _SigninWidgetState extends State<SigninWidget> {
                                               ),
                                               Padding(
                                                 padding:
-                                                EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
+                                                    EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
                                                 child: Row(
                                                   mainAxisSize: MainAxisSize.max,
                                                   children: [
@@ -807,11 +807,11 @@ class _SigninWidgetState extends State<SigninWidget> {
                                                           options: ['نعم', 'لا'],
                                                           onChanged: (value) {
                                                             setState(
-                                                                    () => radioButtonValue = value);
+                                                                () => radioButtonValue = value);
                                                           },
                                                           optionHeight: 25,
                                                           textStyle:
-                                                          FlutterFlowTheme.bodyText1.override(
+                                                              FlutterFlowTheme.bodyText1.override(
                                                             fontFamily: 'Poppins',
                                                             color: Colors.black,
                                                           ),
@@ -819,11 +819,11 @@ class _SigninWidgetState extends State<SigninWidget> {
                                                           direction: Axis.horizontal,
                                                           radioButtonColor: Colors.blue,
                                                           inactiveRadioButtonColor:
-                                                          Color(0x8A000000),
+                                                              Color(0x8A000000),
                                                           toggleable: false,
                                                           horizontalAlignment: WrapAlignment.start,
                                                           verticalAlignment:
-                                                          WrapCrossAlignment.start,
+                                                              WrapCrossAlignment.start,
                                                         ),
                                                       ),
                                                     ),
@@ -842,7 +842,7 @@ class _SigninWidgetState extends State<SigninWidget> {
                                               ),
                                               Padding(
                                                 padding:
-                                                EdgeInsetsDirectional.fromSTEB(0, 24, 0, 0),
+                                                    EdgeInsetsDirectional.fromSTEB(0, 24, 0, 0),
                                                 child: FFButtonWidget(
                                                   onPressed: () async {
                                                     setState(() => _loadingButton4 = true);
@@ -862,11 +862,12 @@ class _SigninWidgetState extends State<SigninWidget> {
                                                         return;
                                                       }
                                                       sendOTP(signUpEmailController.text, context);
+                                                      print(signUpPass2Controller.text);
                                                       beginPhoneAuth(
                                                         context: context,
                                                         phoneNumber: phoneNumberController.text,
                                                         email: signUpEmailController.text,
-                                                        password: signUpPassController.text,
+                                                        password: signUpPass2Controller.text,
                                                       );
                                                       await Navigator.pushAndRemoveUntil(
                                                         context,
@@ -876,9 +877,10 @@ class _SigninWidgetState extends State<SigninWidget> {
                                                             lastName: textController2.text,
                                                             email: signUpEmailController.text,
                                                             phoneNumber: phoneNumberController.text,
+                                                            password: signUpPass2Controller.text,
                                                           ),
                                                         ),
-                                                            (r) => false,
+                                                        (r) => false,
                                                       );
                                                     } finally {
                                                       setState(() => _loadingButton4 = false);
