@@ -45,14 +45,14 @@ Future resetPassword({String email, BuildContext context}) async {
   );
 }
 
-Future<bool> verifyEmailOTP(email, otp, BuildContext context, password, String firstName,
+Future<bool> verifyEmailOTP(String email, otp, BuildContext context,String password, String firstName,
     String lastName, String phoneNumber) async {
   bool res = EmailAuth(sessionName: 'Arabic Sign Language')
       .validateOtp(recipientMail: email, userOtp: otp);
-  print(res);
+
   if (res) {
     print('OTP verified');
-    print(email + password);
+    print("$email $password");
     createAccountWithEmail(context, email, password,
         firstName: firstName, lastName: lastName, phone: phoneNumber);
     return res;
@@ -106,6 +106,7 @@ Future beginPhoneAuth({
     phoneNumber: phoneNumber,
     timeout: Duration(seconds: 0),
     verificationCompleted: (phoneAuthCredential) async {
+      print("beginAuth $password");
       await Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(

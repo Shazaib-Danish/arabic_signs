@@ -14,7 +14,7 @@ Future<User> signInWithEmail(BuildContext context, String email, String password
 
 Future<User> createAccountWithEmail(BuildContext context, String email, String password,
     {String firstName, String lastName, String phone}) async {
-  print(email + password);
+  print("$email $password");
   final createAccountFunc = () => FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password)
           .whenComplete(() {
