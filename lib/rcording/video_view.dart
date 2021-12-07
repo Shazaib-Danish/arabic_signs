@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:arabic_lan/backend/firebase.dart';
+import 'package:arabic_lan/rcording/rcording_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
@@ -31,6 +32,7 @@ class _VideoViewPageState extends State<VideoViewPage> {
       backgroundColor: Colors.black,
       appBar: AppBar(
         backgroundColor: Colors.black,
+        
       ),
       body: Container(
         width: MediaQuery.of(context).size.width,
@@ -48,12 +50,15 @@ class _VideoViewPageState extends State<VideoViewPage> {
                   : Container(),
             ),
             Positioned(
-              bottom: 0,
+              bottom: 20,
               child: InkWell(
                 onTap: () async {
                   String resul = await uploadToStorage(widget.file);
-                  Navigator.pop(context);
                   print(resul);
+                  Navigator.of(context).pushAndRemoveUntil(
+                      MaterialPageRoute(builder: (c) => RcordingWidget()),
+                          (route) => false);
+
                 },
                 child: Container(
                     color: Colors.black38,

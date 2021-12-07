@@ -30,6 +30,8 @@ dependencies:
   built_value:
   cached_network_image:
   chewie:
+  splashscreen:
+  charts_flutter:
   cloud_firestore:
   firebase_auth:
   firebase_core:

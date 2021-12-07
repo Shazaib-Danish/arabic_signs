@@ -25,8 +25,9 @@ class _CameraScreenState extends State<CameraScreen> {
   bool isworking = false;
   double transform = 0;
   String result = "data";
+  int endTime = 0;
   initCamera() {
-    _cameraController = CameraController(cameras[0], ResolutionPreset.high);
+    _cameraController = CameraController(cameras[1], ResolutionPreset.high);
     cameraValue = _cameraController.initialize().then((_) {
       if (!mounted) {
         return;
@@ -42,10 +43,27 @@ class _CameraScreenState extends State<CameraScreen> {
       });
     });
   }
+  Timer periodicTimer;
+  void startcoundown(){
+    periodicTimer = Timer.periodic(
+          const Duration(seconds: 1),
+          (timer) {
+        setState(() {
+         if(endTime>0){
+           endTime--;
+         }else{
+           periodicTimer.cancel();
+           recordingEnd();
+         }
+        });
+      },
+    );
+  }
+
+
 
   runModelOnFrameStream() async {
     if (cameraImage != null) {
-      print("image");
       var recoganization = await Tflite.runModelOnFrame(
         bytesList: cameraImage.planes.map((e) => e.bytes).toList(),
         imageHeight: cameraImage.height,
@@ -78,14 +96,14 @@ class _CameraScreenState extends State<CameraScreen> {
   @override
   void initState() {
     super.initState();
-    classifyImage();
     initCamera();
+    classifyImage();
   }
 
   @override
   void dispose() {
     super.dispose();
-    _cameraController.dispose();
+    _cameraController?.dispose();
   }
 
   @override
@@ -100,18 +118,15 @@ class _CameraScreenState extends State<CameraScreen> {
                   return Container(
                       width: MediaQuery.of(context).size.width,
                       height: MediaQuery.of(context).size.height,
-                      child: Stack(
-                        children: [
-                          CameraPreview(_cameraController),
-                          Positioned(right: 20, top: 20, child: Text(result)),
-                        ],
-                      ));
+                      child: CameraPreview(_cameraController));
                 } else {
                   return const Center(
                     child: CircularProgressIndicator(),
                   );
                 }
               }),
+          Positioned(right: 20, top: 20, child: Text(result,style: TextStyle(color: Colors.blueAccent),)),
+          Positioned(left: 20, top: 20, child: Text(endTime.toString(),style: TextStyle(color: Colors.blueAccent),)),
           Positioned(
             bottom: 0.0,
             child: Container(
@@ -132,32 +147,31 @@ class _CameraScreenState extends State<CameraScreen> {
                           ),
                           onPressed: () {
                             setState(() {
-                              flash = flash;
+                              if(!flash){
+                                _cameraController
+                                    .setFlashMode(FlashMode.torch);
+                                flash=true;
+                              }else{
+                                _cameraController.setFlashMode(FlashMode.off);
+                                flash=false;
+                              }
                             });
-                            flash
-                                ? _cameraController
-                                    .setFlashMode(FlashMode.torch)
-                                : _cameraController.setFlashMode(FlashMode.off);
+
                           }),
                       GestureDetector(
                         onTap: () async {
                           if (!isRecoring) {
+                            _cameraController.stopImageStream();
                             await _cameraController.startVideoRecording();
                             setState(() {
+
                               isRecoring = true;
+                              endTime=30;
+                              startcoundown();
                             });
+
                           } else {
-                            XFile videopath =
-                                await _cameraController.stopVideoRecording();
-                            setState(() {
-                              isRecoring = false;
-                            });
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (builder) => VideoViewPage(
-                                          file: File(videopath.path),
-                                        )));
+                            recordingEnd();
                           }
                         },
                         child: isRecoring
@@ -182,11 +196,20 @@ class _CameraScreenState extends State<CameraScreen> {
                             ),
                           ),
                           onPressed: () async {
+                            int cameraPos;
                             setState(() {
-                              iscamerafront = iscamerafront;
+
+                              if(iscamerafront){
+                                iscamerafront = false;
+                                cameraPos = 0;
+                              }else{
+                                iscamerafront = true;
+                                cameraPos = 1;
+                              }
+
                               transform = transform + pi;
                             });
-                            int cameraPos = iscamerafront ? 0 : 1;
+
                             _cameraController = CameraController(
                                 cameras[cameraPos], ResolutionPreset.high);
                             cameraValue = _cameraController.initialize();
@@ -197,7 +220,7 @@ class _CameraScreenState extends State<CameraScreen> {
                     height: 4,
                   ),
                   const Text(
-                    "Tap for Video Recorging",
+                    "Tap for Video Recording",
                     style: TextStyle(
                       color: Colors.white,
                     ),
@@ -210,5 +233,19 @@ class _CameraScreenState extends State<CameraScreen> {
         ],
       ),
     );
+  }
+  void recordingEnd()async{
+    XFile videopath =
+        await _cameraController.stopVideoRecording();
+    setState(() {
+      isRecoring = false;
+
+    });
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (builder) => VideoViewPage(
+              file: File(videopath.path),
+            )));
   }
 }

@@ -1,5 +1,6 @@
+import 'package:arabic_lan/backend/firebase.dart';
 import 'package:arabic_lan/rcording/camera_view.dart';
-import 'package:arabic_lan/rcording/dummy_data.dart';
+
 
 import '../dashboard/dashboard_widget.dart';
 import '../flutter_flow/flutter_flow_count_controller.dart';
@@ -19,21 +20,25 @@ class RcordingWidget extends StatefulWidget {
   _RcordingWidgetState createState() => _RcordingWidgetState();
 }
 
-class _RcordingWidgetState extends State {
+class _RcordingWidgetState extends State<RcordingWidget> with SingleTickerProviderStateMixin{
   bool _loadingButton3 = false;
   bool _loadingButton4 = false;
   bool _loadingButton5 = false;
   bool _loadingButton6 = false;
   int countControllerValue;
+  TabController _tabController;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
+    loop();
+    _tabController = TabController(vsync: this,length: 2);
     super.initState();
   }
 
   @override
   void dispose() async {
+    _tabController.dispose();
     super.dispose();
   }
 
@@ -76,9 +81,11 @@ class _RcordingWidgetState extends State {
                         child: Column(
                           children: [
                             TabBar(
+                              controller: _tabController,
                               labelColor: FlutterFlowTheme.tertiaryColor,
                               labelStyle: FlutterFlowTheme.title2,
                               indicatorColor: FlutterFlowTheme.secondaryColor,
+
                               tabs: [
                                 Tab(
                                   text: 'التسجيل اليدوي',
@@ -90,6 +97,7 @@ class _RcordingWidgetState extends State {
                             ),
                             Expanded(
                               child: TabBarView(
+                              controller: _tabController,
                                 children: [
                                   // altasjeel yadvi screen
                                   SingleChildScrollView(
@@ -242,7 +250,7 @@ class _RcordingWidgetState extends State {
                                         ),
                                         ////////////////////////////////////////////////////////////////////////
                                         Column(
-                                          children: word,
+                                          children: wordsWidget,
                                         ),
                                         Container(
                                           width:
@@ -254,9 +262,7 @@ class _RcordingWidgetState extends State {
                                           decoration: BoxDecoration(),
                                           child: Stack(
                                             children: [
-                                              //
-                                              //write code list show
-                                              //
+
                                             ],
                                           ),
                                         )
@@ -271,7 +277,7 @@ class _RcordingWidgetState extends State {
                                       children: [
                                         Container(
                                           width:
-                                              MediaQuery.of(context).size.width,
+                                          MediaQuery.of(context).size.width,
                                           height: 70,
                                           decoration: BoxDecoration(
                                             color: Color(0xA0EEEEEE),
@@ -375,7 +381,8 @@ class _RcordingWidgetState extends State {
                                           ),
                                         ),
                                         SizedBox(
-                                          height: 450,
+                                          height: 600,
+                                          width: MediaQuery.of(context).size.width,
                                           child: CameraScreen(),
                                         ),
                                       ],
@@ -572,6 +579,7 @@ class _RcordingWidgetState extends State {
                       ),
                     ),
                   ),
+
                 ],
               ),
             ),
@@ -579,5 +587,27 @@ class _RcordingWidgetState extends State {
         ),
       ),
     );
+  }
+  List<Widget> wordsWidget = [];
+
+  void loop()async{
+   // List<String> words=await getWords();
+    for(int i=0; i<10; i++){
+      wordsWidget .add(Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: InkWell(
+          onTap: (){
+            _tabController.animateTo((_tabController.index + 1) % 2);
+          },
+          child: Text("words[i]",
+            style: TextStyle(
+                fontSize: 20.0,
+                color: Colors.white,
+                fontWeight: FontWeight.w900
+            ),
+          ),
+        ),
+      ));
+    }
   }
 }
