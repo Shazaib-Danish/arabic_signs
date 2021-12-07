@@ -249,7 +249,9 @@ class _RcordingWidgetState extends State<RcordingWidget>
                                         ),
                                         ////////////////////////////////////////////////////////////////////////
                                         Column(
-                                          children: wordsWidget,
+                                          children: wordsWidget.length > 0
+                                              ? wordsWidget
+                                              : CircularProgressIndicator(),
                                         ),
                                         Container(
                                           width:
@@ -607,5 +609,6 @@ class _RcordingWidgetState extends State<RcordingWidget>
         ),
       ));
     }
+    setState(() {});
   }
 }

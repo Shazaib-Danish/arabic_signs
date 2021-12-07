@@ -26,14 +26,14 @@ Future<String> uploadToStorage(File file) async {
     final int millSeconds = now.millisecondsSinceEpoch;
     final String month = now.month.toString();
     final String date = now.day.toString();
-    // final String storageId = (millSeconds.toString() + currentUser.user.uid);
+    final String storageId = (millSeconds.toString() + currentUser.user.uid);
     final String today = ('$month-$date');
 
     Reference ref = FirebaseStorage.instance
         .ref()
         .child("video")
         .child(today)
-        .child("storageId");
+        .child(storageId);
     UploadTask uploadTask =
         ref.putFile(file, SettableMetadata(contentType: 'video/mp4'));
 
