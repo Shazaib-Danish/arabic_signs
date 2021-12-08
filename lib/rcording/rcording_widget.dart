@@ -1,5 +1,4 @@
 import 'package:arabic_lan/backend/firebase.dart';
-import 'package:arabic_lan/rcording/camera_view.dart';
 
 import '../dashboard/dashboard_widget.dart';
 import '../flutter_flow/flutter_flow_count_controller.dart';
@@ -8,7 +7,14 @@ import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
 import '../profile/profile_widget.dart';
 import '../wallet/wallet_widget.dart';
+import 'dart:async';
+import 'dart:io';
+import 'dart:math';
+
+import 'package:arabic_lan/main.dart';
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:tflite/tflite.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -19,26 +25,31 @@ class RcordingWidget extends StatefulWidget {
   _RcordingWidgetState createState() => _RcordingWidgetState();
 }
 
-class _RcordingWidgetState extends State<RcordingWidget>
-    with SingleTickerProviderStateMixin {
+class _RcordingWidgetState extends State {
   bool _loadingButton3 = false;
   bool _loadingButton4 = false;
   bool _loadingButton5 = false;
   bool _loadingButton6 = false;
   int countControllerValue;
-  TabController _tabController;
+  List<String> words = [];
+  String arabicWord = "Wait";
+  int selectedIndex = 0;
+  String showWords = "";
+
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     loop();
-    _tabController = TabController(vsync: this, length: 2);
+    initCamera();
+    classifyImage();
+
     super.initState();
   }
 
   @override
   void dispose() async {
-    _tabController.dispose();
+    _cameraController?.dispose();
     super.dispose();
   }
 
@@ -81,7 +92,6 @@ class _RcordingWidgetState extends State<RcordingWidget>
                         child: Column(
                           children: [
                             TabBar(
-                              controller: _tabController,
                               labelColor: FlutterFlowTheme.tertiaryColor,
                               labelStyle: FlutterFlowTheme.title2,
                               indicatorColor: FlutterFlowTheme.secondaryColor,
@@ -96,7 +106,6 @@ class _RcordingWidgetState extends State<RcordingWidget>
                             ),
                             Expanded(
                               child: TabBarView(
-                                controller: _tabController,
                                 children: [
                                   // altasjeel yadvi screen
                                   SingleChildScrollView(
@@ -117,7 +126,16 @@ class _RcordingWidgetState extends State<RcordingWidget>
                                                     .fromSTEB(3, 0, 2, 0),
                                                 child: FFButtonWidget(
                                                   onPressed: () {
-                                                    print('Next pressed ...');
+                                                    if (selectedIndex ==
+                                                        words.length - 1) {
+                                                      selectedIndex = 0;
+                                                    } else {
+                                                      selectedIndex++;
+                                                    }
+                                                    setState(() {
+                                                      arabicWord =
+                                                          words[selectedIndex];
+                                                    });
                                                   },
                                                   text: 'التالي',
                                                   options: FFButtonOptions(
@@ -162,7 +180,7 @@ class _RcordingWidgetState extends State<RcordingWidget>
                                                               .fromSTEB(
                                                                   0, 5, 0, 0),
                                                       child: Text(
-                                                        'تعاون',
+                                                        arabicWord,
                                                         textAlign:
                                                             TextAlign.center,
                                                         style: FlutterFlowTheme
@@ -221,7 +239,16 @@ class _RcordingWidgetState extends State<RcordingWidget>
                                                     .fromSTEB(2, 0, 0, 0),
                                                 child: FFButtonWidget(
                                                   onPressed: () {
-                                                    print('prev pressed ...');
+                                                    if (selectedIndex == 0) {
+                                                      selectedIndex =
+                                                          words.length - 1;
+                                                    } else {
+                                                      selectedIndex--;
+                                                    }
+                                                    setState(() {
+                                                      arabicWord =
+                                                          words[selectedIndex];
+                                                    });
                                                   },
                                                   text: 'السابق ',
                                                   options: FFButtonOptions(
@@ -248,11 +275,7 @@ class _RcordingWidgetState extends State<RcordingWidget>
                                           ),
                                         ),
                                         ////////////////////////////////////////////////////////////////////////
-                                        Column(
-                                          children: wordsWidget.length > 0
-                                              ? wordsWidget
-                                              : indicator,
-                                        ),
+
                                         Container(
                                           width:
                                               MediaQuery.of(context).size.width,
@@ -261,9 +284,7 @@ class _RcordingWidgetState extends State<RcordingWidget>
                                                   .height *
                                               0.76,
                                           decoration: BoxDecoration(),
-                                          child: Stack(
-                                            children: [],
-                                          ),
+                                          child: Camera(),
                                         )
                                       ],
                                     ),
@@ -343,14 +364,16 @@ class _RcordingWidgetState extends State<RcordingWidget>
                                                       ),
                                                       count:
                                                           countControllerValue ??=
-                                                              3,
+                                                              0,
                                                       updateCount: (count) =>
                                                           setState(() =>
                                                               countControllerValue =
                                                                   count),
                                                       stepSize: 1,
-                                                      minimum: 1,
-                                                      maximum: 10,
+                                                      minimum: 0,
+                                                      maximum: words != null
+                                                          ? words.length
+                                                          : 10,
                                                     ),
                                                   ),
                                                 ),
@@ -379,11 +402,47 @@ class _RcordingWidgetState extends State<RcordingWidget>
                                             ),
                                           ),
                                         ),
+                                        Container(
+                                          color: Colors.white.withOpacity(0.6),
+                                          width:
+                                              MediaQuery.of(context).size.width,
+                                          height: 50,
+                                          child: MaterialButton(
+                                            onPressed: () {
+                                              setState(() {
+                                                showWords =
+                                                    words[countControllerValue];
+                                              });
+                                            },
+                                            child: Text(
+                                              "إرسال ",
+                                              style: TextStyle(
+                                                  fontSize: 30,
+                                                  color: Colors.black),
+                                            ),
+                                          ),
+                                        ),
+                                        Container(
+                                          color: Colors.amber,
+                                          width:
+                                              MediaQuery.of(context).size.width,
+                                          height: 50,
+                                          child: Center(
+                                            child: Text(
+                                              countControllerValue > 0
+                                                  ? showWords
+                                                  : "تظهر الكلمات المختارة هنا",
+                                              style: TextStyle(
+                                                  fontSize: 30,
+                                                  color: Colors.white),
+                                            ),
+                                          ),
+                                        ),
                                         SizedBox(
                                           height: 600,
                                           width:
                                               MediaQuery.of(context).size.width,
-                                          child: CameraScreen(),
+                                          child: Camera(),
                                         ),
                                       ],
                                     ),
@@ -588,29 +647,276 @@ class _RcordingWidgetState extends State<RcordingWidget>
     );
   }
 
-  List<Widget> wordsWidget = [];
-  List<Widget> indicator = [
-    CircularProgressIndicator(),
-  ];
   void loop() async {
-    List<String> words = await getWords();
-    for (int i = 0; i < words.length; i++) {
-      wordsWidget.add(Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: InkWell(
-          onTap: () {
-            _tabController.animateTo((_tabController.index + 1) % 2);
-          },
-          child: Text(
-            words[i],
-            style: TextStyle(
-                fontSize: 20.0,
-                color: Colors.white,
-                fontWeight: FontWeight.w900),
+    words = await getWords();
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          "Video uploaded  With Size " + words.length.toString(),
+        ),
+      ),
+    );
+    arabicWord = words[selectedIndex];
+    setState(() {});
+  }
+
+  void recordingEnd() async {
+    XFile videopath = await _cameraController.stopVideoRecording();
+    setState(() {
+      isRecoring = false;
+      if (countControllerValue > 0) {
+        countControllerValue--;
+        showWords = words[countControllerValue];
+      }
+      endTime = 0;
+      showMyDialog(File(videopath.path));
+    });
+    setState(() {});
+  }
+
+  showMyDialog(File file) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text(
+            'حوار التنبيه',
+            textAlign: TextAlign.end,
+          ),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: const <Widget>[
+                Text('هل ترغب في الرفع؟', textAlign: TextAlign.end),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('إلغاء'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: const Text('تحميل'),
+              onPressed: () {
+                uploadToStorage(file, context);
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Widget Camera() {
+    return Stack(
+      children: [
+        FutureBuilder(
+            future: cameraValue,
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.done) {
+                return Container(
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height,
+                    child: CameraPreview(_cameraController));
+              } else {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+            }),
+        Positioned(
+            right: 20,
+            top: 20,
+            child: Text(
+              result,
+              style: TextStyle(color: Colors.blueAccent),
+            )),
+        Positioned(
+            left: 20,
+            top: 20,
+            child: Text(
+              endTime.toString(),
+              style: TextStyle(color: Colors.blueAccent),
+            )),
+        Positioned(
+          bottom: 0.0,
+          child: Container(
+            color: Colors.black,
+            padding: const EdgeInsets.only(top: 5, bottom: 5),
+            width: MediaQuery.of(context).size.width,
+            child: Column(
+              children: [
+                Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    IconButton(
+                        icon: Icon(
+                          flash ? Icons.flash_on : Icons.flash_off,
+                          color: Colors.white,
+                          size: 28,
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            if (!flash) {
+                              _cameraController.setFlashMode(FlashMode.torch);
+                              flash = true;
+                            } else {
+                              _cameraController.setFlashMode(FlashMode.off);
+                              flash = false;
+                            }
+                          });
+                        }),
+                    GestureDetector(
+                      onTap: () async {
+                        if (!isRecoring) {
+                          _cameraController.stopImageStream();
+                          await _cameraController.startVideoRecording();
+                          setState(() {
+                            isRecoring = true;
+                            endTime = 30;
+                            startcoundown();
+                          });
+                        } else {
+                          recordingEnd();
+                        }
+                      },
+                      child: isRecoring
+                          ? const Icon(
+                              Icons.radio_button_on,
+                              color: Colors.red,
+                              size: 80,
+                            )
+                          : const Icon(
+                              Icons.panorama_fish_eye,
+                              color: Colors.white,
+                              size: 70,
+                            ),
+                    ),
+                    IconButton(
+                        icon: Transform.rotate(
+                          angle: transform,
+                          child: const Icon(
+                            Icons.flip_camera_ios,
+                            color: Colors.white,
+                            size: 28,
+                          ),
+                        ),
+                        onPressed: () async {
+                          int cameraPos;
+                          setState(() {
+                            if (iscamerafront) {
+                              iscamerafront = false;
+                              cameraPos = 0;
+                            } else {
+                              iscamerafront = true;
+                              cameraPos = 1;
+                            }
+
+                            transform = transform + pi;
+                          });
+
+                          _cameraController = CameraController(
+                              cameras[cameraPos], ResolutionPreset.high);
+                          cameraValue = _cameraController.initialize();
+                        }),
+                  ],
+                ),
+                const SizedBox(
+                  height: 4,
+                ),
+                const Text(
+                  "Tap for Video Recording",
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                  textAlign: TextAlign.center,
+                )
+              ],
+            ),
           ),
         ),
-      ));
+      ],
+    );
+  }
+
+  CameraController _cameraController;
+  CameraImage cameraImage;
+  Future<void> cameraValue;
+  bool isRecoring = false;
+  bool flash = false;
+  bool iscamerafront = true;
+  bool isworking = false;
+  double transform = 0;
+  String result = "data";
+  int endTime = 0;
+  initCamera() {
+    _cameraController = CameraController(cameras[1], ResolutionPreset.high);
+    cameraValue = _cameraController.initialize().then((_) {
+      if (!mounted) {
+        return;
+      }
+      setState(() {
+        _cameraController.startImageStream((image) {
+          if (!isworking) {
+            isworking = true;
+            cameraImage = image;
+            runModelOnFrameStream();
+          }
+        });
+      });
+    });
+  }
+
+  Timer periodicTimer;
+  void startcoundown() {
+    periodicTimer = Timer.periodic(
+      const Duration(seconds: 1),
+      (timer) {
+        setState(() {
+          if (endTime > 0) {
+            endTime--;
+          } else {
+            periodicTimer.cancel();
+            recordingEnd();
+          }
+        });
+      },
+    );
+  }
+
+  runModelOnFrameStream() async {
+    if (cameraImage != null) {
+      var recoganization = await Tflite.runModelOnFrame(
+        bytesList: cameraImage.planes.map((e) => e.bytes).toList(),
+        imageHeight: cameraImage.height,
+        imageWidth: cameraImage.width,
+        imageMean: 127.5,
+        imageStd: 127.5,
+        rotation: 90,
+        numResults: 2,
+        threshold: 0.1,
+      );
+      result = "";
+      recoganization.forEach((element) {
+        result += element["label"] +
+            (element["confidence"] * 100 as double).toStringAsFixed(0) +
+            "%\n\n";
+      });
+      setState(() {
+        result;
+      });
+      isworking = false;
     }
-    setState(() {});
+  }
+
+  classifyImage() async {
+    await Tflite.loadModel(
+        model: "assets/mobilenet_v1_1.0_224.tflite",
+        labels: "assets/mobilenet_v1_1.0_224.txt");
   }
 }

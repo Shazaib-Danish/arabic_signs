@@ -4,6 +4,7 @@ import 'package:arabic_lan/auth/firebase_user_provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/material.dart';
 
 Future<List<String>> getWords() async {
   List<String> wordsList = [];
@@ -20,11 +21,11 @@ Future<List<String>> getWords() async {
   return wordsList;
 }
 
-Future<String> uploadToStorage(File file) async {
+Future<String> uploadToStorage(File file, BuildContext context) async {
   try {
     int sizeInBytes = file.lengthSync();
     double sizeInMb = sizeInBytes / (1024 * 1024);
-    print(sizeInMb);
+
     final DateTime now = DateTime.now();
     final int millSeconds = now.millisecondsSinceEpoch;
     final String month = now.month.toString();
@@ -42,8 +43,23 @@ Future<String> uploadToStorage(File file) async {
 
     var dowurl = await (await uploadTask).ref.getDownloadURL();
     String url = dowurl.toString();
-
-    return url;
+    if (url != null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            "Video uploaded  With Size " + sizeInMb.toString(),
+          ),
+        ),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            "Failed to upload",
+          ),
+        ),
+      );
+    }
   } catch (error) {
     print(error);
   }

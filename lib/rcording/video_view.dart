@@ -32,7 +32,6 @@ class _VideoViewPageState extends State<VideoViewPage> {
       backgroundColor: Colors.black,
       appBar: AppBar(
         backgroundColor: Colors.black,
-        
       ),
       body: Container(
         width: MediaQuery.of(context).size.width,
@@ -53,12 +52,11 @@ class _VideoViewPageState extends State<VideoViewPage> {
               bottom: 20,
               child: InkWell(
                 onTap: () async {
-                  String resul = await uploadToStorage(widget.file);
+                  String resul = await uploadToStorage(widget.file, context);
                   print(resul);
                   Navigator.of(context).pushAndRemoveUntil(
                       MaterialPageRoute(builder: (c) => RcordingWidget()),
-                          (route) => false);
-
+                      (route) => false);
                 },
                 child: Container(
                     color: Colors.black38,
